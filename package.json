@@ -1,0 +1,25 @@
+{
+  "name": "serverless_chatbot",
+  "version": "1.0.0",
+  "description": "serverless_chatbot",
+  "main": "handler.js",
+  "scripts": {
+    "test": "serverless-bundle test"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Altitech-online/serverless-chatbot.git"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "serverless-bundle": "3.2.0",
+    "serverless-dotenv-plugin": "^2.1.1",
+    "serverless-offline": "^5.3.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-comprehend": "^3.4.1",
+    "ibm-watson": "^6.0.2"
+  }
+}

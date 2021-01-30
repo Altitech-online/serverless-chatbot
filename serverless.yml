@@ -1,0 +1,46 @@
+service: serverless-chatbot
+
+# Create an optimized package for our functions
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-offline
+  - serverless-dotenv-plugin # Load .env as environment variables
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: prod
+  region: eu-west-2
+
+  # These environment variables are made available to our functions
+  # under process.env.
+  environment:
+    watsonApiKey: ${env:WATSON_API_KEY}
+    watsonUrl: ${env:WATSON_URL}
+    watsonVersion: ${env:WATSON_VERSION}
+    watsonAssistantId: ${env:WATSON_ASSISTANT_ID}
+
+  # 'iamRoleStatements' defines the permission policy for the Lambda function.
+  # In this case Lambda functions are granted with permissions to access DynamoDB.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - comprehend:DetectSentiment
+      Resource: "arn:aws:comprehend:eu-west-2:*:*"
+
+functions:  
+  sendMessage:
+    handler: routes/sendMessage.main
+    events:
+      - http:
+          path: message
+          method: post
+          cors: true
+          authorizer: aws_iam                       
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}               
