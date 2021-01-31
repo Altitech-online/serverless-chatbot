@@ -28,7 +28,7 @@ export const sendMessage = async (assistant, sessionId, message) => {
     sessionId,
     input: {
       message_type: "text",
-      message,
+      text: message,
     },
   });
   return response;

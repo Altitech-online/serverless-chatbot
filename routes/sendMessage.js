@@ -17,12 +17,11 @@ export const main = handler(async (event, context) => {
         output: { generic },
       },
     } = response;
-    const text = generic[0].text;
     const sentimentResponse = await getSentiment(message);
 
     const { Sentiment } = sentimentResponse;
     return {
-      text,
+      generic,
       session,
       Sentiment,
     };
