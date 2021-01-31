@@ -24,12 +24,12 @@ provider:
     watsonAssistantId: ${env:WATSON_ASSISTANT_ID}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
-  # In this case Lambda functions are granted with permissions to access DynamoDB.
+  # In this case Lambda functions are granted with permissions to access Comprehend.
   iamRoleStatements:
     - Effect: Allow
       Action:
         - comprehend:DetectSentiment
-      Resource: "arn:aws:comprehend:eu-west-2:*:*"
+      Resource: "*"
 
 functions:  
   sendMessage:
