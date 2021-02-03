@@ -31,6 +31,7 @@ provider:
         - comprehend:DetectSentiment
       Resource: "*"
 
+# Here we define our routes, in this case we only have one route for sending a message.
 functions:  
   sendMessage:
     handler: routes/sendMessage.main
