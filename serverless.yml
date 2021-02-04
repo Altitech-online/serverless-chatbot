@@ -18,17 +18,25 @@ provider:
   # These environment variables are made available to our functions
   # under process.env.
   environment:
+    tableName: ${env:TABLE_NAME}
     watsonApiKey: ${env:WATSON_API_KEY}
     watsonUrl: ${env:WATSON_URL}
     watsonVersion: ${env:WATSON_VERSION}
     watsonAssistantId: ${env:WATSON_ASSISTANT_ID}
 
   # 'iamRoleStatements' defines the permission policy for the Lambda function.
-  # In this case Lambda functions are granted with permissions to access Comprehend.
+  # In this case Lambda functions are granted with permissions to access Comprehend and DynamoDb.
   iamRoleStatements:
     - Effect: Allow
       Action:
         - comprehend:DetectSentiment
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
       Resource: "*"
 
 # Here we define our routes, in this case we only have one route for sending a message.
@@ -40,7 +48,15 @@ functions:
           path: message
           method: post
           cors: true
-          authorizer: aws_iam                       
+          authorizer: aws_iam        
+  fetchMood:
+    handler: routes/fetchMood.main
+    events:
+      - http:
+          path: mood
+          method: get
+          cors: true
+          authorizer: aws_iam                               
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
