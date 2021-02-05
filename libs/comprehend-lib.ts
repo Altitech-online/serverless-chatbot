@@ -5,7 +5,7 @@ import {
 
 export const getSentiment = async (message) => {
   const client = new ComprehendClient({ region: "eu-west-2" });
-  let params = {
+  const params = {
     LanguageCode: "en",
     Text: message,
   };

@@ -1,0 +1,35 @@
+{
+    "env": {
+        "browser": true,
+        "node": true,
+        "es2020": true,
+        "jest": true,
+        "webdriverio/wdio": true,
+        "mocha": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "jest",
+        "prettier",
+        "webdriverio"
+    ],
+    "rules": {
+        "curly": [
+            "error"
+        ],
+        "dot-notation": [
+            "error"
+        ],
+        "yoda": [
+            "error"
+        ],
+        "camelcase": "off",
+        "@typescript-eslint/camelcase": [
+            "warn"
+        ]
+    }
+}
