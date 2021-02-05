@@ -8,7 +8,7 @@ plugins:
   - serverless-bundle # Package our functions with Webpack
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
-
+  - serverless-plugin-typescript
 provider:
   name: aws
   runtime: nodejs12.x
