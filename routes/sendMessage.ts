@@ -1,21 +1,20 @@
-import { createAssistant, getSession, sendMessage } from "../libs/watson-lib";
+import { Watson } from "../libs/watson-lib";
 import { getSentiment } from "../libs/comprehend-lib";
 import handler from "../libs/handler-lib";
 import { putItem } from "../helpers/putItem";
 
 export const main = handler(async (event, context) => {
+  const watson = new Watson();
   const { message, sessionId } = JSON.parse(event.body);
-  const assistant = createAssistant();
+  const assistant = watson.createAssistant();
   const userId = event.requestContext.identity.cognitoIdentityId;
   let session = sessionId;
   if (!sessionId) {
-    session = await getSession(assistant);
+    session = assistant.createSession();
   }
-  const response = await sendMessage(assistant, session, message);
+  const response = assistant.sendMessage(message, session);
   const {
-    result: {
-      output: { generic },
-    },
+    output: { generic },
   } = response;
   const sentimentResponse = await getSentiment(message);
 
