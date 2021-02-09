@@ -11,15 +11,20 @@ export const main = handler(async (event, context) => {
   if (!sessionId) {
     session = await getSession(assistant);
   }
-  const response = await sendMessage(assistant, session, message);
+  const sentimentResponse = await getSentiment(message);
+
+  const { Sentiment } = sentimentResponse;
+  const response = await sendMessage(
+    assistant,
+    session,
+    `${message} ${Sentiment}`
+  );
   const {
     result: {
       output: { generic },
     },
   } = response;
-  const sentimentResponse = await getSentiment(message);
 
-  const { Sentiment } = sentimentResponse;
   await putItem(userId, message, Sentiment);
   return {
     generic,
