@@ -6,10 +6,13 @@ import AssistantV2, {
 import { IamAuthenticator } from "ibm-watson/auth";
 
 export class Watson {
+  //This class is used to create a Watson assistant, generate a session and send a message.
+  //These private variables are only accessible within the class but there are methods available that return them once they have been set.
+  //The typings are imported directly from the ibm-watson assistant package
   private assistant: AssistantV2;
-  public sessionId: string;
-  public messageResponse: MessageResponse;
-  
+  private sessionId: string;
+  private messageResponse: MessageResponse;
+  //The createAssitant method creates a new watson assistant.
   public createAssistant(): Watson {
     this.assistant = new AssistantV2({
       version: process.env.watsonVersion,
@@ -20,7 +23,7 @@ export class Watson {
     });
     return this;
   }
-
+  //The createSession method is only used to create the initial session, once created the sessionId is retained for future requests.
   public createSession(): string {
     const params: CreateSessionParams = {
       assistantId: process.env.watsonAssistantId || "",
@@ -30,7 +33,7 @@ export class Watson {
     });
     return this.sessionId;
   }
-
+  //The sendMessage method takes two parameters and returns a message response
   public sendMessage(message: string, sessionId: string): MessageResponse {
     const params: MessageParams = {
       assistantId: process.env.watsonAssistantId || "",
@@ -47,8 +50,8 @@ export class Watson {
   }
 }
 
-// export const createAssistant = (): AssistantV2 => {
-//   const assistant: AssistantV2 = new AssistantV2({
+// export const createAssistant = () => {
+//   const assistant = new AssistantV2({
 //     version: process.env.watsonVersion,
 //     authenticator: new IamAuthenticator({
 //       apikey: process.env.watsonApiKey || "",
@@ -58,7 +61,7 @@ export class Watson {
 //   return assistant;
 // };
 
-// export const getSession = async (assistant: AssistantV2): Promise<string> => {
+// export const getSession = async (assistant) => {
 //   const result = await assistant.createSession({
 //     assistantId: process.env.watsonAssistantId || "",
 //   });
@@ -69,10 +72,10 @@ export class Watson {
 // };
 
 // export const sendMessage = async (
-//   assistant: AssistantV2,
-//   sessionId: string,
-//   message: string
-// ): Promise<MessageResponse> => {
+//   assistant,
+//   sessionId,
+//   message
+// ) => {
 //   const response = await assistant.message({
 //     assistantId: process.env.watsonAssistantId || "",
 //     sessionId,
