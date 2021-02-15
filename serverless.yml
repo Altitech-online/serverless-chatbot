@@ -30,6 +30,8 @@ provider:
     - Effect: Allow
       Action:
         - comprehend:DetectSentiment
+        - comprehend:DetectEntities
+        - comprehend:DetectKeyPhrases
         - dynamodb:Scan
         - dynamodb:Query
         - dynamodb:GetItem

@@ -1,5 +1,9 @@
 import { createAssistant, getSession, sendMessage } from "../libs/watson-lib";
-import { getSentiment } from "../libs/comprehend-lib";
+import {
+  getSentiment,
+  getEntities,
+  getKeyPhrases,
+} from "../libs/comprehend-lib";
 import handler from "../libs/handler-lib";
 import { putItem } from "../helpers/putItem";
 
@@ -12,8 +16,13 @@ export const main = handler(async (event, context) => {
     session = await getSession(assistant);
   }
   const sentimentResponse = await getSentiment(message);
+  const entitiesResponse = await getEntities(message);
+  const keyPhrasesResponse = await getKeyPhrases(message);
 
   const { Sentiment } = sentimentResponse;
+  const { Entities } = entitiesResponse;
+  const { KeyPhrases } = keyPhrasesResponse;
+
   const response = await sendMessage(
     assistant,
     session,
@@ -30,5 +39,7 @@ export const main = handler(async (event, context) => {
     generic,
     session,
     Sentiment,
+    Entities,
+    KeyPhrases,
   };
 });

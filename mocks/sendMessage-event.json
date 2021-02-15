@@ -1,8 +1,8 @@
 {
-    "body": "{\"message\":\"hello world\"}",
-    "requestContext": {
-        "identity": {
-          "cognitoIdentityId": "USER-SUB-1234"
-        }
-      }
+  "body": "{\"message\":\"hello darkness my old friend, I've come to Bradford once again. Is that Jackie Chan?\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
 }
