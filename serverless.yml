@@ -9,11 +9,16 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
 
+# Use dotenv
+useDotenv: true
+
 provider:
   name: aws
   runtime: nodejs12.x
   stage: prod
   region: eu-west-2
+  apiGateway:
+    shouldStartNameWithService: true
 
   # These environment variables are made available to our functions
   # under process.env.
@@ -24,22 +29,24 @@ provider:
     watsonVersion: ${env:WATSON_VERSION}
     watsonAssistantId: ${env:WATSON_ASSISTANT_ID}
 
-  # 'iamRoleStatements' defines the permission policy for the Lambda function.
+  # 'iam.role.statements' defines the permission policy for the Lambda function.
   # In this case Lambda functions are granted with permissions to access Comprehend and DynamoDb.
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - comprehend:DetectSentiment
-        - comprehend:DetectEntities
-        - comprehend:DetectKeyPhrases
-        - dynamodb:Scan
-        - dynamodb:Query
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-        - dynamodb:DescribeTable
-      Resource: "*"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - comprehend:DetectSentiment
+            - comprehend:DetectEntities
+            - comprehend:DetectKeyPhrases
+            - dynamodb:Scan
+            - dynamodb:Query
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:DescribeTable
+          Resource: "*"
 
 # Here we define our routes, in this case we only have one route for sending a message.
 functions:  

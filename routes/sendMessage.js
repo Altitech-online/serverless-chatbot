@@ -1,9 +1,5 @@
 import { createAssistant, getSession, sendMessage } from "../libs/watson-lib";
-import {
-  getSentiment,
-  getEntities,
-  getKeyPhrases,
-} from "../libs/comprehend-lib";
+import comprehend from "../libs/comprehend-lib";
 import handler from "../libs/handler-lib";
 import { putItem } from "../helpers/putItem";
 
@@ -15,9 +11,9 @@ export const main = handler(async (event, context) => {
   if (!sessionId) {
     session = await getSession(assistant);
   }
-  const sentimentResponse = await getSentiment(message);
-  const entitiesResponse = await getEntities(message);
-  const keyPhrasesResponse = await getKeyPhrases(message);
+  const sentimentResponse = await comprehend.getSentiment(message);
+  const entitiesResponse = await comprehend.getEntities(message);
+  const keyPhrasesResponse = await comprehend.getKeyPhrases(message);
 
   const { Sentiment } = sentimentResponse;
   const { Entities } = entitiesResponse;
